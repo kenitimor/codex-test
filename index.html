@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>プレゼント抽選アプリ</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero-card">
+        <p class="eyebrow">Giveaway Draw</p>
+        <h1>プレゼント抽選アプリ</h1>
+        <p class="description">
+          Excelの参加者リストをアップロードして、プレゼント当選者をランダムに抽選できます。
+          1枚目のシートに入力された各行を1名の参加者として読み込みます。
+        </p>
+      </section>
+
+      <section class="control-panel" aria-label="抽選設定">
+        <label class="upload-box">
+          <span>参加者リスト（Excel）</span>
+          <input id="participantFile" type="file" accept=".xlsx,.xls" />
+        </label>
+
+        <label class="number-field">
+          <span>抽選で選ぶ人数</span>
+          <input id="winnerCount" type="number" min="1" max="1" value="1" />
+        </label>
+
+        <button id="drawButton" type="button" disabled>抽選する</button>
+      </section>
+
+      <p id="status" class="status" role="status">Excelファイルをアップロードしてください。</p>
+
+      <section class="grid">
+        <article class="card">
+          <h2>参加者リスト</h2>
+          <p id="fileName" class="file-name" hidden></p>
+          <p id="participantCount" class="count">0名</p>
+          <ol id="participantPreview" class="list preview-list"></ol>
+          <p id="participantEmpty" class="empty">まだ参加者が読み込まれていません。</p>
+          <p id="participantMore" class="more" hidden></p>
+        </article>
+
+        <article class="card winners-card">
+          <h2>当選者</h2>
+          <ol id="winnersList" class="list winners-list"></ol>
+          <p id="winnerEmpty" class="empty">抽選すると当選者がここに表示されます。</p>
+        </article>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
