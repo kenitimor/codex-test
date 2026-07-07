@@ -1,41 +1,26 @@
-# HCM Gate Navigator
+# プレゼント抽選アプリ（lottery-app）
 
-日立建機の新事業開発テーマを、ステージゲート制度に沿って管理・可視化する完全静的MVPです。
+GitHub Pagesで公開できる、完全静的なプレゼント抽選アプリです。
 
-## MVPスコープ
+想定公開URL: <https://kenitimor.github.io/lottery-app/>
 
-- 案件管理
-- スコアリング
-- Go/No-Go判定
-- レビュー履歴
+## 機能
 
-## 制約への対応
+- 参加者を1行1名で登録
+- 景品名と数量を編集
+- ブラウザの暗号学的乱数（`crypto.getRandomValues`）で1枠ずつ抽選
+- 当選者の重複を防止
+- 抽選結果をリセット
+- LocalStorageへの自動保存
 
-- サーバー無し: `index.html` / `app.js` / `styles.css` だけで動作します。
-- DB無し: データはブラウザの LocalStorage に保存します。
-- GitHub Pages対応: ルーティングはハッシュURL（例: `#/projects/icon-rider`）を使い、静的ホスティングで直接動きます。
-- 外部API無し: MVPではAI、認証、ファイル連携を呼びません。
+## GitHub Pages対応
 
-## 将来拡張しやすい設計
+- `index.html` / `app.js` / `styles.css` のみで動作する静的サイトです。
+- `.github/workflows/pages.yml` が `main` ブランチへのpushまたは手動実行でGitHub Pagesへデプロイします。
+- `.nojekyll` を配置し、静的ファイルをそのまま配信します。
+- `404.html` は `/lottery-app/` へ戻す簡易リダイレクトとして配置しています。
 
-現時点では単一の静的JSですが、責務は以下の境界で分けています。
-
-- データアクセス: `loadProjects()` / `saveProjects()` を SharePoint Lists、Dataverse、社内DB等へ置換可能
-- AI連携: スコアや次論点を作るロジックを Azure OpenAI 呼び出しへ置換可能
-- 認証: GitHub Pages上の静的UIに Microsoft Entra ID の MSAL.js 認証を追加可能
-- ルーティング: ハッシュルーティングのため、GitHub Pagesで404設定なしに動作
-
-
-## GitHub Pages対応チェック
-
-- `next.config.js`: このMVPはNext.jsを使わない完全静的サイトのため不要です。
-- `output: export`: Next.jsビルドを行わないため不要です。静的ファイルをそのままPagesへアップロードします。
-- `basePath` / `assetPrefix`: 外部バンドルやNext.jsアセットを使わず、`index.html` から同一ディレクトリの `styles.css` / `app.js` を相対参照するため不要です。
-- Router対策: アプリ内遷移は `#/projects/icon-rider` のようなハッシュルーティングです。GitHub Pagesのサブパス配信でもリロード時にサーバー側ルーティングへ依存しません。
-- 直接URL対策: `404.html` を追加し、誤って `/projects/icon-rider` のようなパスへアクセスした場合も `#/projects/icon-rider` 形式へリダイレクトします。
-- Jekyll無効化: `.nojekyll` を配置し、GitHub Pagesが静的ファイルをそのまま配信するようにしています。
-
-## 起動方法
+## ローカル起動
 
 ```bash
 python3 -m http.server 4173 --bind 127.0.0.1
@@ -43,14 +28,13 @@ python3 -m http.server 4173 --bind 127.0.0.1
 
 ブラウザで `http://127.0.0.1:4173/` を開きます。
 
-## 画面
+## 新リポジトリ作成後の反映手順
 
-- `#/` : ダッシュボード
-- `#/projects` : 案件管理
-- `#/projects/icon-rider` : 案件詳細・編集・スコアリング・レビュー履歴
-- `#/reviews` : レビュー履歴一覧
-- `#/scoring` : スコアリング項目・重み設定
+GitHub上で `kenitimor/lottery-app` を作成したら、以下で現在の内容を反映できます。
 
-## GitHub Pagesへの自動デプロイ
+```bash
+git remote add lottery-app https://github.com/kenitimor/lottery-app.git
+git push lottery-app HEAD:main
+```
 
-`.github/workflows/pages.yml` が、`main` ブランチへのpushまたは手動実行でリポジトリ直下の静的ファイルをGitHub Pagesへデプロイします。
+GitHub Pagesは、リポジトリの **Settings > Pages** で Source を **GitHub Actions** に設定してください。
