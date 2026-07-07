@@ -3,21 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HCM Gate Navigator</title>
+    <title>プレゼント抽選アプリ</title>
     <script>
-      (function () {
-        var path = window.location.pathname;
-        var segments = path.split('/').filter(Boolean);
-        var isProjectPages = window.location.hostname.endsWith('github.io') && segments.length > 0;
-        var base = isProjectPages ? '/' + segments[0] + '/' : '/';
-        var routeSegments = isProjectPages ? segments.slice(1) : segments;
-        var route = '/' + routeSegments.join('/');
-        var hashRoute = route === '/' ? '#/' : '#' + route;
-        window.location.replace(base + hashRoute + window.location.search);
-      })();
+      window.location.replace('/lottery-app/');
     </script>
   </head>
   <body>
-    <p>HCM Gate Navigatorへリダイレクトしています。</p>
+    <p>プレゼント抽選アプリへリダイレクトしています。</p>
   </body>
 </html>

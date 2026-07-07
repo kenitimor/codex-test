@@ -1,4 +1,4 @@
-name: Deploy static MVP to GitHub Pages
+name: Deploy lottery app to GitHub Pages
 
 on:
   push:
